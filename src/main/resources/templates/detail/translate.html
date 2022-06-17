@@ -6,13 +6,45 @@
 </head>
 <body>
     <div th:replace="header.html :: header"></div>
-    <h3> 언어감지 페이지 </h3>
-    <form>
-        입력1 : <input type="text" id="0ttt">  번역1 : <span id="0t">-번역-</span>
-        <button type="button" onclick="">번역</button>
-    </form>
+    <h3> community page </h3>
+    <h4> Today's topic </h4>
+    <img src="/img/고양이사진1.jpg" width="450" alt="My Image">
+    <table class="table table-hover" id="boardtable"></table>
+    <div>
+        <span>NAME:</span><h2 id="whoqwe" th:if="${ session.login != null }"  th:text="${ session.login }"></h2>
+        <h5>Translation Using KakaoOpenAPI</h5>
+        <form id="transExForm" name="transExForm">
+
+            before translation <br>
+            <select id="src_lang" name="src_lang">
+                <option value="kr">korean</option>
+                <option value="en">english</option>
+                <option value="jp">japanese</option>
+            </select>
+            <br>
+            after translation <br>
+            <select id="target_lang" name="target_lang">
+                <option value="en">english</option>
+                <option value="kr">korean</option>
+                <option value="jp">japanese</option>
+            </select>
+            <br>
+            <br>
+            <h2>Translation target<br></h2>
+            <textarea id="query" name="query" cols="80" rows="5"></textarea>
+
+        </form>
+    </div>
+    <div>
+        <button onclick="process()">Translation</button>
+        <br>
+
+        <h2>Translation complete<br></h2>
+        <textarea id="result_translation" name="result_translation" cols="80" rows="5"></textarea>
+        <button onclick="registration()">speech registration</button>
+    </div>
     <div th:replace="footer.html :: footer"></div>
 
-
+    <script src="/js/board/translate.js"></script>
 </body>
 </html>

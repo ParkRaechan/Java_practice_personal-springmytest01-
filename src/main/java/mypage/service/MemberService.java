@@ -52,7 +52,7 @@ public class MemberService {
                         .build();
 
                 // 세션 객체 호출
-                request.getSession().setAttribute("login" , logindto ); // 세션이름 ,데이터
+                request.getSession().setAttribute("login" , logindto.getMname() ); // 세션이름 ,데이터
 
                 return true; // 4. 로그인 성공
             }
