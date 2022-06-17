@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController // 컨트롤러를 json을 반환하는 컨트롤러 설정 [ 타임리프x ]
 public class HelloController {
 
-    @GetMapping("/hello")
+    @GetMapping("hello")
     public HelloDto hello(){
         // Dto 생성 
         HelloDto helloDto = HelloDto.builder()

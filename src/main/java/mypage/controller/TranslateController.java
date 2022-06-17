@@ -10,7 +10,7 @@ public class TranslateController {
     // 1. 번역 페이지 이동 매핑
     @GetMapping("/translate")
     public String signup(){
-        return "/detail/translate";
+        return "detail/translate";
     }
 
 }

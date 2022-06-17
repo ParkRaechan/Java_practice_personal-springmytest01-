@@ -16,7 +16,7 @@ public class MemberController {
     // 1. 회원가입 페이지 이동 매핑
     @GetMapping("/signup")
     public String signup(){
-        return "/member/signup";
+        return "member/signup";
     }
 
 
@@ -32,7 +32,7 @@ public class MemberController {
     // 3. 로그인 페이지 이동 매핑
     @GetMapping("/login")
     public String login( ){
-        return "/member/login";
+        return "member/login";
     }
 
     // 4. 로그인 처리 매핑
