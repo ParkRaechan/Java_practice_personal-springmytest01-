@@ -1,16 +1,3 @@
-$(function(){
-    $.ajax({
-        url : "/board/boardlist",
-        success : function(data){
-            let html = ""
-            html += '<tr><th>no</th><th>content</th><th>name</th></tr>';
-            for(let i = 0; i < data.length; i++){
-                html += '<tr><td>' + data[i]["bno"] + '</td><td>' + data[i]["bcontent"] + '</td><td>' + data[i]["whoqwe"] + '</td></tr>';
-            }
-            $("#boardtable").html(html);
-        }
-    });
-})
 
 function process() {
 

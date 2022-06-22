@@ -7,11 +7,30 @@
 <body>
     <div th:replace="header.html :: header"></div>
     <h3> community page </h3>
+
     <h4> Today's topic </h4>
     <img src="/img/고양이사진1.jpg" width="450" alt="My Image">
     <table class="table table-hover" id="boardtable"></table>
+    <ul id="pagebtnbox" class="pagination justify-content-center">
+    </ul>
+
+
+    <div class="justify-content-center">
+        <select id="key">
+            <option value="bcontent">content</option>
+            <option value="whoqwe">name</option>
+        </select>
+        <input type="text" id="keyword">
+        <button type="button" onclick="search()">search</button>
+    </div>
+
+
+
+
     <div>
-        <span>NAME:</span><h2 id="whoqwe" th:if="${ session.login != null }"  th:text="${ session.login }"></h2>
+        <span>NAME:</span>
+        <h2 id="whoqwe" th:if="${ session.login != null }"  th:text="${ session.login }"></h2>
+        <h2 id="whoqwe" th:if="${ session.login == null }"  th:text="익명"></h2>
         <h5>Translation Using KakaoOpenAPI</h5>
         <form id="transExForm" name="transExForm">
 
@@ -24,14 +43,14 @@
             <br>
             after translation <br>
             <select id="target_lang" name="target_lang">
-                <option value="en">english</option>
-                <option value="kr">korean</option>
-                <option value="jp">japanese</option>
-            </select>
-            <br>
-            <br>
-            <h2>Translation target<br></h2>
-            <textarea id="query" name="query" cols="80" rows="5"></textarea>
+        <option value="en">english</option>
+        <option value="kr">korean</option>
+        <option value="jp">japanese</option>
+        </select>
+        <br>
+        <br>
+        <h2>Translation target<br></h2>
+        <textarea id="query" name="query" cols="80" rows="5"></textarea>
 
         </form>
     </div>
@@ -46,5 +65,7 @@
     <div th:replace="footer.html :: footer"></div>
 
     <script src="/js/board/translate.js"></script>
+    <script src="/js/board/board.js"></script>
+
 </body>
 </html>

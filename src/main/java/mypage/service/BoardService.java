@@ -6,9 +6,12 @@ import mypage.domain.board.BoardEntity;
 import mypage.domain.board.BoardRepository;
 import mypage.dto.BoardDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
@@ -28,17 +31,54 @@ public class BoardService {
         }
     }
 
-    public JSONArray boardlist(){
-        JSONArray jsonArray = new JSONArray();
-        List<BoardEntity> boardlist = boardRepository.findAll();
-        for(BoardEntity boardEntity : boardlist){
-            JSONObject object = new JSONObject();
-            object.put("bno",boardEntity.getBno()+"");
-            object.put("bcontent",boardEntity.getBcontent());
-            object.put("whoqwe",boardEntity.getWhoqwe());
-            jsonArray.put(object);
+    public JSONObject getboardlist(String key , String keyword , int page ){
+
+        JSONObject object = new JSONObject();
+
+        Page<BoardEntity> boardEntities = null ;
+
+        Pageable pageable = PageRequest.of(page, 3, Sort.by(Sort.Direction.DESC,"bno"));
+
+        //검색[필드를 첨가한]
+        if(key.equals("bcontent")){
+            boardEntities =boardRepository.findBybcontent(keyword,pageable);
+        }else if(key.equals("whoqwe")){
+            boardEntities =boardRepository.findBywhoqwe(keyword,pageable);
+        }else{
+            boardEntities =boardRepository.findBybcontent(keyword,pageable);
         }
-        return jsonArray;
+
+////////////////////////////////////////////////////////////
+
+        //페이징
+        int btncount= 5;
+        int startbtn = (page/btncount) *btncount+1;
+        int endbtn = startbtn + btncount -1;
+
+        if(endbtn > boardEntities.getTotalPages()) endbtn = boardEntities.getTotalPages();
+
+/////////////////////////////////////////////////////////////
+
+        JSONArray jsonArray = new JSONArray();
+        for(BoardEntity entity : boardEntities ){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("bno",entity.getBno());
+            jsonObject.put("bcontent",entity.getBcontent());
+            jsonObject.put("whoqwe",entity.getWhoqwe());
+            jsonArray.put(jsonObject);
+        }
+
+/////////////////////////////////////////////////////////////
+
+        object.put( "startbtn" , startbtn );       //  시작 버튼
+        object.put( "endhtn" , endbtn );         // 끝 버튼
+        object.put( "totalpages" , boardEntities.getTotalPages() );  // 전체 페이지 수
+        object.put( "data" , jsonArray );  // 리스트를 추가
+
+/////////////////////////////////////////////////////////////
+
+        return object;
+
     }
 
 

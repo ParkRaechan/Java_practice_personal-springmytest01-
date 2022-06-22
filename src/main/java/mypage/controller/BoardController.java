@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
@@ -23,14 +24,17 @@ public class BoardController {
         return result;
     }
     //board리스트출력
-    @GetMapping("/boardlist")
-    @ResponseBody
-    public void getboardlist(HttpServletResponse response){
-        JSONArray array = boardService.boardlist();
+    @GetMapping("/getboardlist")
+    public void getboardlist(
+            HttpServletResponse response,
+            @RequestParam("key") String key ,
+            @RequestParam("keyword") String keyword ,
+            @RequestParam("page") int page  ){
+
         try{
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
-            response.getWriter().print(array);
+            response.getWriter().println(boardService.getboardlist( key , keyword , page ));
         }catch(Exception e){e.printStackTrace();}
     }
 
